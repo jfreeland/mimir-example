@@ -16,9 +16,12 @@ receivers:
   - name: default
     webhook_configs:
       - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/
+        send_resolved: true
   - name: devops
     webhook_configs:
       - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/
+        send_resolved: true
   - name: platform
     webhook_configs:
       - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/7DgwRUZa8N25KXMFdqKnoTCNd/
+        send_resolved: true

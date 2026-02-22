@@ -1,43 +1,60 @@
 # Helm values for Grafana Alloy to sync CRDs to Grafana Cloud Mimir
 
 alloy:
-  # Enable stability level for experimental components via CLI arg
-  arguments:
-    - --stability.level=experimental
+  stabilityLevel: experimental
+
+  extraEnv:
+    - name: MIMIR_ACCESS_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: mimir-credentials
+          key: token
 
   configMap:
     create: true
     content: |
+      remote.kubernetes.secret "mimir" {
+        namespace = "alloy"
+        name      = "mimir-credentials"
+      }
+
       // Mimir rules kubernetes - syncs PrometheusRule CRDs to Mimir ruler
       mimir.rules.kubernetes "rules" {
-        address         = "https://prometheus-us-central1.grafana.net"
-        mimir_api_user  = "666905"
-        mimir_api_password = env("MIMIR_ACCESS_TOKEN")
+        address = "https://prometheus-us-central1.grafana.net"
+
+        basic_auth {
+          username = "666905"
+          password = remote.kubernetes.secret.mimir.data["token"]
+        }
 
         rule_selector {
-          matchLabels = {
+          match_labels = {
             "app.kubernetes.io/name" = "mimir-rules",
           }
         }
-
-        namespace_label = "monitoring"
       }
 
       // Mimir alerts kubernetes - syncs AlertmanagerConfig CRDs to Mimir alertmanager
       mimir.alerts.kubernetes "alerts" {
         address = "https://alertmanager-us-central1.grafana.net"
+        global_config = "{\"route\":{\"receiver\":\"default\",\"group_by\":[\"alertname\",\"team\"],\"group_wait\":\"30s\",\"group_interval\":\"5m\",\"repeat_interval\":\"4h\"},\"receivers\":[{\"name\":\"default\",\"webhook_configs\":[{\"url\":\"https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/\"}]}]}"
 
         basic_auth {
           username = "331405"
-          password = env("MIMIR_ACCESS_TOKEN")
+          password = remote.kubernetes.secret.mimir.data["token"]
+        }
+
+        // Don't inject namespace matchers - our alerts don't have namespace labels
+        alertmanagerconfig_matcher {
+          strategy = "None"
         }
 
         alertmanagerconfig_selector {
-          matchLabels = {}
+          match_labels = {}
         }
 
         alertmanagerconfig_namespace_selector {
-          matchLabels = {}
+          match_labels = {}
         }
 
         sync_interval = "1m"
@@ -49,6 +66,9 @@ rbac:
   extraRules:
     - apiGroups: ["monitoring.coreos.com"]
       resources: ["prometheusrules", "alertmanagerconfigs"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["secrets", "namespaces"]
       verbs: ["get", "list", "watch"]
 
 # Service account

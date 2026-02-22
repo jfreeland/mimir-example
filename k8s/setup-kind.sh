@@ -6,6 +6,7 @@ set -e
 
 CLUSTER_NAME="mimir-test"
 NAMESPACE="monitoring"
+ALLOY_NAMESPACE="alloy"
 
 # Get token from .envrc if exists
 if [ -f .envrc ]; then
@@ -43,21 +44,21 @@ kubectl apply -f k8s/alertmanagerconfigs/
 echo "=== Applying PrometheusRule CRDs ==="
 kubectl apply -f k8s/prometheusrules/
 
-echo "=== Creating secret for Mimir token ==="
-kubectl create namespace alloy || true
+echo "=== Creating secret for Mimir token in alloy namespace ==="
+kubectl create namespace "$ALLOY_NAMESPACE" || true
 sed "s/<YOUR-MIMIR-ACCESS-TOKEN>/$MIMIR_ACCESS_TOKEN/" k8s/secret-template.yaml | kubectl apply -f -
 
 echo "=== Installing Grafana Alloy ==="
 helm repo add grafana https://grafana.github.io/helm-charts
 helm upgrade --install alloy grafana/alloy \
-	--namespace alloy \
+	--namespace "$ALLOY_NAMESPACE" \
 	--values k8s/helm-values.yaml
 
 echo "=== Checking Alloy status ==="
-kubectl get pods -n alloy
-kubectl logs -n alloy deployment/alloy --tail=30
+kubectl get pods -n "$ALLOY_NAMESPACE"
+kubectl logs -n "$ALLOY_NAMESPACE" deployment/alloy --tail=30
 
 echo ""
 echo "=== Done! ==="
 echo "To check CRDs: kubectl get prometheusrules,alertmanagerconfigs -n $NAMESPACE"
-echo "To check Alloy: kubectl logs -n alloy deployment/alloy -f"
+echo "To check Alloy: kubectl logs -n $ALLOY_NAMESPACE deployment/alloy -f"

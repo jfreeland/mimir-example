@@ -19,3 +19,4 @@ spec:
     - name: platform
       webhookConfigs:
         - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/7DgwRUZa8N25KXMFdqKnoTCNd/"
+          sendResolved: true
