@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: default-alerts
+  namespace: monitoring
+  labels:
+    team: default
+spec:
+  route:
+    groupBy: ["alertname", "team"]
+    groupWait: "30s"
+    groupInterval: "5m"
+    repeatInterval: "4h"
+    receiver: default
+    continue: false
+  receivers:
+    - name: default
+      webhookConfigs:
+        - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/"

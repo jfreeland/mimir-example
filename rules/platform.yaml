@@ -1,0 +1,10 @@
+namespace: platform
+groups:
+    - name: services
+      interval: 1m
+      rules:
+        - alert: greater than 5
+          expr: mimirtool_test_metric > 5
+          for: 1m
+          labels:
+            team: platform

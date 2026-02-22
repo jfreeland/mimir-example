@@ -1,0 +1,37 @@
+// Grafana Alloy config to sync Kubernetes CRDs to Grafana Cloud Mimir
+// Run with: alloy --stability.level=experimental alloy.alloy
+
+// Mimir rules kubernetes - syncs PrometheusRule CRDs to Mimir ruler
+mimir.rules.kubernetes "rules" {
+  address         = "https://prometheus-us-central1.grafana.net"
+  mimir_api_user  = "666905"
+  mimir_api_password = env("MIMIR_ACCESS_TOKEN")
+
+  rule_selector {
+    matchLabels = {
+      "app.kubernetes.io/name" = "mimir-rules",
+    }
+  }
+
+  namespace_label = "monitoring"
+}
+
+// Mimir alerts kubernetes - syncs AlertmanagerConfig CRDs to Mimir alertmanager
+mimir.alerts.kubernetes "alerts" {
+  address = "https://alertmanager-us-central1.grafana.net"
+
+  basic_auth {
+    username = "331405"
+    password = env("MIMIR_ACCESS_TOKEN")
+  }
+
+  alertmanagerconfig_selector {
+    matchLabels = {}
+  }
+
+  alertmanagerconfig_namespace_selector {
+    matchLabels = {}
+  }
+
+  sync_interval = "1m"
+}

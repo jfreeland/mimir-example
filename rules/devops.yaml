@@ -1,0 +1,15 @@
+namespace: devops
+groups:
+    - name: services
+      interval: 1m
+      rules:
+        - alert: greater than 2
+          expr: mimirtool_test_metric > 2
+          for: 1m
+          labels:
+            team: devops
+        - alert: greater than 3
+          expr: mimirtool_test_metric > 3
+          for: 1m
+          labels:
+            team: devops

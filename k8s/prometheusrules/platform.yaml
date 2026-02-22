@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: platform-alerts
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: mimir-rules
+    team: platform
+spec:
+  groups:
+    - name: services
+      interval: 1m
+      rules:
+        - alert: GreaterThan5
+          expr: mimirtool_test_metric > 5
+          for: 1m
+          labels:
+            team: platform
+          annotations:
+            summary: "mimirtool_test_metric is above 5"
