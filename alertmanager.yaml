@@ -15,13 +15,13 @@ route:
 receivers:
   - name: default
     webhook_configs:
-      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/
+      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/UrzdX3lmIJtOdXfzZUZlrtI5R/
         send_resolved: true
   - name: devops
     webhook_configs:
-      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/
+      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/UrzdX3lmIJtOdXfzZUZlrtI5R/
         send_resolved: true
   - name: platform
     webhook_configs:
-      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/7DgwRUZa8N25KXMFdqKnoTCNd/
+      - url: https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/ixS0oRLy0M5yQWbtpmvqwPbLl/
         send_resolved: true

@@ -7,7 +7,7 @@ RULES_DIR  := rules
 sync: lint
 	@mimirtool rules sync \
 		--address="$(MIMIR_ADDR)" \
-		--user="$(MIMIR_USERNAME)" \
+		--user="$(MIMIR_PROMETHEUS_ID)" \
 		--key="$(MIMIR_ACCESS_TOKEN)" \
 		--rule-dirs="$(RULES_DIR)"
 
@@ -17,13 +17,13 @@ lint:
 list:
 	@mimirtool rules list \
 		--address="$(MIMIR_ADDR)" \
-		--user="$(MIMIR_USERNAME)" \
+		--user="$(MIMIR_PROMETHEUS_ID)" \
 		--key="$(MIMIR_ACCESS_TOKEN)"
 
 print:
 	@mimirtool rules print \
 		--address="$(MIMIR_ADDR)" \
-		--user="$(MIMIR_USERNAME)" \
+		--user="$(MIMIR_PROMETHEUS_ID)" \
 		--key="$(MIMIR_ACCESS_TOKEN)"
 
 am-sync: am-verify

@@ -18,5 +18,5 @@ spec:
   receivers:
     - name: platform
       webhookConfigs:
-        - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/7DgwRUZa8N25KXMFdqKnoTCNd/"
+        - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/ixS0oRLy0M5yQWbtpmvqwPbLl/"
           sendResolved: true

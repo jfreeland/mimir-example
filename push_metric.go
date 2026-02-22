@@ -21,7 +21,7 @@ func main() {
 
 	url := os.Getenv("MIMIR_ADDRESS") + "/push"
 	tenantID := os.Getenv("MIMIR_TENANT_ID")
-	username := os.Getenv("MIMIR_USERNAME")
+	username := os.Getenv("MIMIR_PROMETHEUS_ID")
 	apiToken := os.Getenv("MIMIR_ACCESS_TOKEN")
 
 	ticker := time.NewTicker(*interval)

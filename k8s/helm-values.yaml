@@ -37,7 +37,7 @@ alloy:
       // Mimir alerts kubernetes - syncs AlertmanagerConfig CRDs to Mimir alertmanager
       mimir.alerts.kubernetes "alerts" {
         address = "https://alertmanager-us-central1.grafana.net"
-        global_config = "{\"route\":{\"receiver\":\"default\",\"group_by\":[\"alertname\",\"team\"],\"group_wait\":\"30s\",\"group_interval\":\"5m\",\"repeat_interval\":\"4h\"},\"receivers\":[{\"name\":\"default\",\"webhook_configs\":[{\"url\":\"https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/\"}]}]}"
+        global_config = "{\"route\":{\"receiver\":\"default\",\"group_by\":[\"alertname\",\"team\"],\"group_wait\":\"30s\",\"group_interval\":\"5m\",\"repeat_interval\":\"4h\"},\"receivers\":[{\"name\":\"default\",\"webhook_configs\":[{\"url\":\"https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/UrzdX3lmIJtOdXfzZUZlrtI5R/\",\"send_resolved\":true}]}]}"
 
         basic_auth {
           username = "331405"

@@ -16,5 +16,5 @@ spec:
   receivers:
     - name: default
       webhookConfigs:
-        - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/vxbd1hHJcdvUOhq8xB5xgxjTG/"
+        - url: "https://oncall-prod-us-central-0.grafana.net/oncall/integrations/v1/alertmanager/UrzdX3lmIJtOdXfzZUZlrtI5R/"
           sendResolved: true
